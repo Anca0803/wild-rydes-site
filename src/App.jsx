@@ -41,7 +41,7 @@ export default function App() {
   }
 
   async function createNote(event) {
-    eevent.preventDefault();
+    event.preventDefault();
 
     // ⛔ Block if there are already 10 notes
     if (notes.length >= 10) {
@@ -49,15 +49,14 @@ export default function App() {
       return;
     }
 
-
     const form = new FormData(event.target);
 
     const name = form.get("name").trim();
     const description = form.get("description").trim();
 
     // Enforce a character limit
-    if (description.length > 1000) {
-      alert("Note is too long. Maximum 1000 characters.");
+    if (description.length > 500) {
+      alert("Note is too long. Maximum 500 characters.");
       return;
     }
 
