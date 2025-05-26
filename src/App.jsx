@@ -89,7 +89,7 @@ export default function App() {
           width="100%"
           margin="0 auto"
         >
-          <Heading level={1} style={{ fontSize: '3rem', marginTop: '4rem' }}>
+          <Heading level={1} style={{ fontSize: '2rem', marginTop: '4rem' }}>
             My Notes App
           </Heading>
 
@@ -123,7 +123,7 @@ export default function App() {
             </Flex>
           </View>
           <Divider />
-          <Heading level={1} style={{ fontSize: '3rem', marginTop: '4rem' }}>
+          <Heading level={1} style={{ fontSize: '2rem', marginTop: '4rem' }}>
             My Current Notes
           </Heading>
 
