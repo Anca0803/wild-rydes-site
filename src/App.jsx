@@ -90,7 +90,7 @@ export default function App() {
           margin="0 auto"
         >
           <Heading level={1} style={{ fontSize: '2rem', marginTop: '4rem' }}>
-            My To-Do App
+            My To-Do List App
           </Heading>
 
           <View as="form" margin="4rem 1rem" onSubmit={createNote}>
@@ -124,7 +124,7 @@ export default function App() {
           </View>
           <Divider />
           <Heading level={1} style={{ fontSize: '2rem', marginTop: '4rem' }}>
-            My Current Notes
+            My Current notes
           </Heading>
 
           <Grid
