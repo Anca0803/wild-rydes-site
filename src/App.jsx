@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+
+
 import {
   Authenticator,
   Button,
@@ -22,6 +24,9 @@ Amplify.configure(outputs);
 const client = generateClient({
   authMode: "userPool",
 });
+
+import './index.css';
+
 
 export default function App() {
   const [notes, setNotes] = useState([]);
@@ -73,15 +78,18 @@ export default function App() {
           justifyContent="center"
           alignItems="center"
           direction="column"
-          width="70%"
+          width="100%"
           margin="0 auto"
         >
-          <Heading level={1}>My Notes App</Heading>
-          <View as="form" margin="3rem 0" onSubmit={createNote}>
+          <Heading level={1} style={{ fontSize: '3rem', marginTop: '4rem' }}>
+            My Notes App
+          </Heading>
+
+          <View as="form" margin="4rem 1rem" onSubmit={createNote}>
             <Flex
               direction="column"
               justifyContent="center"
-              gap="2rem"
+              gap="3rem"
               padding="2rem"
             >
               <TextField
@@ -98,7 +106,7 @@ export default function App() {
                 label="Note Description"
                 labelHidden
                 variation="quiet"
-                required
+
               />
 
               <Button type="submit" variation="primary">
@@ -107,7 +115,10 @@ export default function App() {
             </Flex>
           </View>
           <Divider />
-          <Heading level={2}>Current Notes</Heading>
+          <Heading level={1} style={{ fontSize: '3rem', marginTop: '4rem' }}>
+            My Current Notes
+          </Heading>
+
           <Grid
             margin="3rem 0"
             autoFlow="column"
@@ -122,7 +133,8 @@ export default function App() {
                 justifyContent="center"
                 alignItems="center"
                 gap="2rem"
-                border="1px solid #ccc"
+                border="2px solid #ccc"
+                backgroundColor="white"
                 padding="2rem"
                 borderRadius="5%"
                 className="box"
@@ -141,7 +153,11 @@ export default function App() {
               </Flex>
             ))}
           </Grid>
-          <Button onClick={signOut}>Sign Out</Button>
+          <Button onClick={signOut} variation="primary">
+            Sign Out
+          </Button>
+
+
         </Flex>
       )}
     </Authenticator>

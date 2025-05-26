@@ -2,18 +2,38 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
   color: rgba(255, 255, 255, 0.87);
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
+}
 
+h2 {
+  margin-top: 300px;
+  /* Push it down */
+  font-size: 3.6rem;
+  /* 30% bigger than default 2rem */
+  text-align: center;
+  color: #cde1cd;
+}
+
+http: //localhost:5173/
+
+.box {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #062206;
 }
 
 .card {
@@ -36,26 +56,23 @@
   grid-column: 3;
 }
 
-<style>
-
-/* Background Image with semi-transparent overlay */
+/* ✅ Background Image with semi-transparent overlay */
 body {
   position: relative;
   background: url('/flori-verzi.jpg') no-repeat center center fixed;
   background-size: cover;
   margin: 0;
   font-family: 'Arial', sans-serif;
-  color: #062206;
+  color: #9ab39a;
 }
 
 body::before {
   content: '';
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   background-color: rgba(255, 255, 255, 0.6);
-  /* Semi-transparent overlay */
   z-index: -1;
 }
