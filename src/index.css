@@ -21,7 +21,7 @@ h2 {
   color: #cde1cd;
 }
 
-http: //localhost:5173/
+
 
 .box {
   background-color: white;
@@ -64,6 +64,16 @@ body {
   margin: 0;
   font-family: 'Arial', sans-serif;
   color: #9ab39a;
+}
+
+.amplify-button {
+  font-size: 1.3rem;
+  padding: 1rem 2rem;
+}
+
+.amplify-textfield__input {
+  font-size: 1.3rem;
+  padding: 0.8rem;
 }
 
 body::before {
