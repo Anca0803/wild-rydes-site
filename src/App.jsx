@@ -90,7 +90,7 @@ export default function App() {
           margin="0 auto"
         >
           <Heading level={1} style={{ fontSize: '2rem', marginTop: '4rem' }}>
-            My Notes App
+            My To-Do App
           </Heading>
 
           <View as="form" margin="4rem 1rem" onSubmit={createNote}>
@@ -118,7 +118,7 @@ export default function App() {
               />
 
               <Button type="submit" variation="primary">
-                Create Note
+                Create a To-Do note
               </Button>
             </Flex>
           </View>
