@@ -25,15 +25,15 @@ h2 {
 
 .box {
   background-color: white;
-  padding: 2rem;
+  padding: 1.5rem;
   border-radius: 1rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  width: 300px;
-  min-height: 200px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   color: #062206;
+  flex: 0 0 90%;
+  /* each note takes 90% of screen width */
+  scroll-snap-align: start;
+  box-sizing: border-box;
+  min-height: 200px;
 }
 
 .card {
@@ -85,4 +85,33 @@ body::before {
   height: 100%;
   background-color: rgba(255, 255, 255, 0.6);
   z-index: -1;
+}
+
+.notes-scroll-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  margin: 2rem 0;
+}
+
+
+
+
+/* 📱 Mobile: horizontal scroll for notes only */
+@media (max-width: 768px) {
+  .notes-scroll-container {
+    display: flex;
+    overflow-x: auto;
+    gap: 1rem;
+    padding: 1rem;
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: 1rem;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .box {
+    flex: 0 0 90%;
+    scroll-snap-align: start;
+  }
 }

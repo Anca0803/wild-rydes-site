@@ -31,6 +31,9 @@ import './index.css';
 export default function App() {
   const [notes, setNotes] = useState([]);
 
+  useEffect(() => {
+    fetchNotes();
+  }, []);
 
 
   async function fetchNotes() {
@@ -124,16 +127,11 @@ export default function App() {
             My Current notes
           </Heading>
 
-          <Grid
-            margin="3rem 0"
-            autoFlow="column"
-            justifyContent="center"
-            gap="2rem"
-            alignContent="center"
-          >
+          <div className="notes-scroll-container">
             {notes.map((note) => (
               <Flex
                 key={note.id || note.name}
+
                 direction="column"
                 justifyContent="center"
                 alignItems="center"
@@ -148,7 +146,6 @@ export default function App() {
                   <Heading level="3">{note.name}</Heading>
                 </View>
                 <Text fontStyle="italic">{note.description}</Text>
-
                 <Button
                   variation="destructive"
                   onClick={() => deleteNote(note)}
@@ -157,7 +154,9 @@ export default function App() {
                 </Button>
               </Flex>
             ))}
-          </Grid>
+          </div>
+
+
           <Button onClick={signOut} variation="primary">
             Sign Out
           </Button>
@@ -167,6 +166,10 @@ export default function App() {
       )}
     </Authenticator>
   );
+
+
 }
+
+
 
 
