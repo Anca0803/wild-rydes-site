@@ -15,14 +15,20 @@ import {
 import { Amplify } from "aws-amplify";
 import "@aws-amplify/ui-react/styles.css";
 import { generateClient } from "aws-amplify/data";
-import outputs from "../amplify_outputs.json";
+import outputs from "../amplify_outputs_fixed.json";
+import { fetchAuthSession } from 'aws-amplify/auth';
+
 
 /**
  * @type {import('aws-amplify/data').Client<import('../amplify/data/resource').Schema>}
  */
 Amplify.configure(outputs);
+console.log("🔗 API endpoint:", outputs.data.url);
+
 const client = generateClient({
   authMode: "userPool",
+  authToken: async () =>
+    (await fetchAuthSession()).tokens?.idToken?.toString(),
 });
 
 import './index.css';
