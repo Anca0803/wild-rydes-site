@@ -4,25 +4,6 @@
     "aws_region": "us-east-1",
     "user_pool_client_id": "6lferja7n42bv6akpsfdb4l1eh",
     "identity_pool_id": "us-east-1:08dff634-91f2-4bca-8f79-e8a52e783b82",
-    "mfa_methods": [],
-    "standard_required_attributes": [
-      "email"
-    ],
-    "username_attributes": [
-      "email"
-    ],
-    "user_verification_types": [
-      "email"
-    ],
-    "groups": [],
-    "mfa_configuration": "NONE",
-    "password_policy": {
-      "min_length": 8,
-      "require_lowercase": true,
-      "require_numbers": true,
-      "require_symbols": true,
-      "require_uppercase": true
-    },
     "unauthenticated_identities_enabled": true
   },
   "data": {
@@ -40,45 +21,45 @@
           "fields": {
             "id": {
               "name": "id",
-              "isArray": false,
               "type": "ID",
               "isRequired": true,
+              "isArray": false,
               "attributes": []
             },
             "name": {
               "name": "name",
-              "isArray": false,
               "type": "String",
               "isRequired": false,
+              "isArray": false,
               "attributes": []
             },
             "description": {
               "name": "description",
-              "isArray": false,
               "type": "String",
               "isRequired": false,
+              "isArray": false,
               "attributes": []
             },
             "image": {
               "name": "image",
-              "isArray": false,
               "type": "String",
               "isRequired": false,
+              "isArray": false,
               "attributes": []
             },
             "createdAt": {
               "name": "createdAt",
-              "isArray": false,
               "type": "AWSDateTime",
               "isRequired": false,
+              "isArray": false,
               "attributes": [],
               "isReadOnly": true
             },
             "updatedAt": {
               "name": "updatedAt",
-              "isArray": false,
               "type": "AWSDateTime",
               "isRequired": false,
+              "isArray": false,
               "attributes": [],
               "isReadOnly": true
             }
@@ -89,25 +70,6 @@
             {
               "type": "model",
               "properties": {}
-            },
-            {
-              "type": "auth",
-              "properties": {
-                "rules": [
-                  {
-                    "provider": "userPools",
-                    "ownerField": "owner",
-                    "allow": "owner",
-                    "identityClaim": "cognito:username",
-                    "operations": [
-                      "create",
-                      "update",
-                      "delete",
-                      "read"
-                    ]
-                  }
-                ]
-              }
             }
           ],
           "primaryKeyInfo": {
@@ -120,27 +82,6 @@
       "enums": {},
       "nonModels": {}
     }
-  },
-  "storage": {
-    "aws_region": "us-east-1",
-    "bucket_name": "amplify-d27yno4bv8qepi-ma-amplifynotesdrivebucket1-vvxvk89l1ulr",
-    "buckets": [
-      {
-        "name": "amplifyNotesDrive",
-        "bucket_name": "amplify-d27yno4bv8qepi-ma-amplifynotesdrivebucket1-vvxvk89l1ulr",
-        "aws_region": "us-east-1",
-        "paths": {
-          "media/${cognito-identity.amazonaws.com:sub}/*": {
-            "entityidentity": [
-              "get",
-              "list",
-              "write",
-              "delete"
-            ]
-          }
-        }
-      }
-    ]
   },
   "version": "1.4"
 }

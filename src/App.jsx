@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 
-
 import {
   Authenticator,
   Button,
@@ -12,77 +11,98 @@ import {
   Grid,
   Divider,
 } from "@aws-amplify/ui-react";
-import { Amplify } from "aws-amplify";
 import "@aws-amplify/ui-react/styles.css";
+
+import { Amplify } from "aws-amplify";
 import { generateClient } from "aws-amplify/data";
-import outputs from "../amplify_outputs_fixed.json";
-import { fetchAuthSession } from 'aws-amplify/auth';
+import { fetchAuthSession } from "aws-amplify/auth";
+import outputs from "../amplify_outputs_fixed";
+import "./index.css";
 
-
-/**
- * @type {import('aws-amplify/data').Client<import('../amplify/data/resource').Schema>}
- */
-Amplify.configure(outputs);
-console.log("🔗 API endpoint:", outputs.data.url);
-
-const client = generateClient({
-  authMode: "userPool",
-  authToken: async () =>
-    (await fetchAuthSession()).tokens?.idToken?.toString(),
+// ✅ Configure Amplify (include auth mode by default)
+Amplify.configure({
+  ...outputs,
+  DataStore: {
+    authModeStrategyType: "multiAuth",
+  },
+  API: {
+    GraphQL: {
+      defaultAuthMode: "userPool", // 👈 FORCE Cognito User Pool
+    },
+  },
 });
 
-import './index.css';
+// ✅ Create Amplify client and attach Cognito token manually
+const client = generateClient({
+  authMode: "userPool",
+  authToken: async () => {
+    const session = await fetchAuthSession();
+    const token = session?.tokens?.idToken?.toString();
+    console.log("🔐 Token preview:", token ? token.slice(0, 50) + "..." : "❌ No token");
+    return token;
+  },
+});
 
+window.client = client;
+console.log("🧩 Available models:", Object.keys(client.models));
 
 export default function App() {
   const [notes, setNotes] = useState([]);
 
-  useEffect(() => {
-    fetchNotes();
-  }, []);
-
-
   async function fetchNotes() {
-    const { data: notes } = await client.models.Note.list();
-    setNotes(notes);
+    try {
+      const { data } = await client.models.Note.list();
+      console.log("📄 Notes:", data);
+      setNotes(data);
+    } catch (error) {
+      console.error("❌ Error fetching notes:", error);
+    }
   }
 
   async function createNote(event) {
     event.preventDefault();
 
-    // ⛔ Block if there are already 10 notes
     if (notes.length >= 10) {
       alert("You can only create up to 10 notes.");
       return;
     }
 
     const form = new FormData(event.target);
-
     const name = form.get("name").trim();
     const description = form.get("description").trim();
 
-    // Enforce a character limit
     if (description.length > 500) {
       alert("Note is too long. Maximum 500 characters.");
       return;
     }
 
-    const { data: newNote } = await client.models.Note.create({
-      name,
-      description,
-      image: "", // no image allowed
-    });
-
-    console.log(newNote);
-    fetchNotes();
-    event.target.reset();
+    try {
+      const { data: newNote } = await client.models.Note.create({
+        name,
+        description,
+        image: "",
+      });
+      console.log("✅ Created:", newNote);
+      fetchNotes();
+      event.target.reset();
+    } catch (error) {
+      console.error("❌ Error creating note:", error);
+    }
   }
 
   async function deleteNote({ id }) {
-    const { data: deletedNote } = await client.models.Note.delete({ id });
-    console.log(deletedNote);
-    fetchNotes();
+    try {
+      const { data: deletedNote } = await client.models.Note.delete({ id });
+      console.log("🗑️ Deleted:", deletedNote);
+      fetchNotes();
+    } catch (error) {
+      console.error("❌ Error deleting note:", error);
+    }
   }
+
+  useEffect(() => {
+    fetchNotes();
+  }, []);
 
   return (
     <Authenticator>
@@ -95,7 +115,7 @@ export default function App() {
           width="100%"
           margin="0 auto"
         >
-          <Heading level={1} style={{ fontSize: '2rem', marginTop: '4rem' }}>
+          <Heading level={1} style={{ fontSize: "2rem", marginTop: "4rem" }}>
             My To-Do List App
           </Heading>
 
@@ -120,7 +140,6 @@ export default function App() {
                 label="Note Description"
                 labelHidden
                 variation="quiet"
-
               />
 
               <Button type="submit" variation="primary">
@@ -128,16 +147,23 @@ export default function App() {
               </Button>
             </Flex>
           </View>
+
           <Divider />
-          <Heading level={1} style={{ fontSize: '2rem', marginTop: '4rem' }}>
-            My Current notes
+
+          <Heading level={1} style={{ fontSize: "2rem", marginTop: "4rem" }}>
+            My Current Notes
           </Heading>
 
-          <div className="notes-scroll-container">
+          <Grid
+            margin="3rem 0"
+            autoFlow="column"
+            justifyContent="center"
+            gap="2rem"
+            alignContent="center"
+          >
             {notes.map((note) => (
               <Flex
                 key={note.id || note.name}
-
                 direction="column"
                 justifyContent="center"
                 alignItems="center"
@@ -152,6 +178,7 @@ export default function App() {
                   <Heading level="3">{note.name}</Heading>
                 </View>
                 <Text fontStyle="italic">{note.description}</Text>
+
                 <Button
                   variation="destructive"
                   onClick={() => deleteNote(note)}
@@ -160,22 +187,13 @@ export default function App() {
                 </Button>
               </Flex>
             ))}
-          </div>
-
+          </Grid>
 
           <Button onClick={signOut} variation="primary">
             Sign Out
           </Button>
-
-
         </Flex>
       )}
     </Authenticator>
   );
-
-
 }
-
-
-
-
